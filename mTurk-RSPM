@@ -1,0 +1,11 @@
+<!--Project: Raven Matrices on Mturk
+  2020-02-13 Shikun, Mintong -->
+  <script>
+    var order = new Array (8:1);
+    var currentTrial  0; // changes from 1 to 0!
+
+  $(document).ready(function(){
+    ShowTrial(currentTrial);
+    BlockIfPreview();
+    CheckBlockList('')
+  })
