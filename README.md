@@ -1,2 +1,4 @@
 # P2-RavenMatrices
- The second project in Daniel Casasantos Experience and Cognition lab. This is for html and css programming on Mturk.
+ ## Brief Description
+ This is the second project on cross-cultural differences of Raven Progressive Matrices. Shikun and Mingtong are the main contributors to the coding part. Special thanks to Jason, and Timothy Brady's mTurk tutorials.
+ 
