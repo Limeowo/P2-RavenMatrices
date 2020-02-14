@@ -1,5 +1,5 @@
-s,ncxzcxz<!--Project: Raven Matrices on Mturk
-  2020-02-13 Shikun, Mintong -->
+<!--Project: Raven Matrices on Mturk
+  2020-02-13 Shikun, Mingtong -->
   <script>
     var order = new Array (8:1);
     var currentTrial  0; // changes from 1 to 0!
@@ -9,3 +9,25 @@ s,ncxzcxz<!--Project: Raven Matrices on Mturk
     BlockIfPreview();
     CheckBlockList('')
   })
+function ShowTrial(which) {
+    if (which >= order.length) {
+        $("#submitButton").show();
+    } else {
+        $("#page" + order[which]).show();
+        var showTrial = which+1; // 0 indexed to 1 indexed
+        $(".currentTrialIndicator").text("Current trial: " + showTrial + " of " + order.length);
+    }
+}
+
+function NextTrial() {
+    var checkedValue = $("input[type=radio]:checked",
+        "#page" + order[currentTrial]).val();
+    if (checkedValue) {
+        $("#page" + order[currentTrial]).hide();
+        currentTrial++;
+        ShowTrial(currentTrial);
+    } else {
+        alert('Please answer the question before moving on!');
+    }
+}
+</script>
