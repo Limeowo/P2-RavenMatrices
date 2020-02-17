@@ -50,6 +50,7 @@ function ShowTrial(which) {
 	}
 }
 
+<!-- stop people moving on when they answer-->
 function NextTrial() {
 	var checkedValue = $("input[type=radio]:checked",
 		"#page" + order[currentTrial]).val();
@@ -57,7 +58,7 @@ function NextTrial() {
 		if (checkedValue) {
 			$("#page" + order[currentTrial]).hide();
 			currentTrial++;
-			if(currentTrial<5){
+			if(currentTrial<=12){
 				ShowTrial(currentTrial);
 			}
 		} else {
@@ -68,7 +69,7 @@ function NextTrial() {
 			$("#page" + order[currentTrial]).hide();
 			currentTrial++;
 			ShowTrial(currentTrial);
-			if(currentTrial>=5){
+			if(currentTrial>12){
 				$("p").hide();
 			}
 	}
@@ -167,12 +168,16 @@ Raven's matrices
 </h1>
 <p><b id="second">10</b> seconds left</p>
 
+<!--this is instruction part -->
 <h3>Judge these images</h3>
 <p>Please rate how interesting each of these four images is, on a scale from 1-5,  where 5 is the most interesting. There are no wrong answers, just go with your instinct. Pass your mouse over the image for a larger view of it.</p>
+
+<!-- question 1 -->
 <div class="page" id="page1">
 <p><img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1stimulus.png" width="500" alt="" /></p>
 <label>
 
+<!--this is style for choices-->
 <style>
 .all-img{
 width:870px;
@@ -187,74 +192,160 @@ flex-wrap:wrap;
 	width:200px;
 }
 </style>
-
 <div class='all-img'>
-<p><input type="radio" name="aquariumI" value="1" /></p>
+
+	<!-- question 1 choices-->
+<p><input type="radio" name="E01" value="1" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
-<p><input type="radio" name="aquariumI" value="2" /></p>
+<p><input type="radio" name="E01" value="2" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
-<p><input type="radio" name="aquariumI" value="3" /></p>
+<p><input type="radio" name="E01" value="3" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
-<p><input type="radio" name="aquariumI" value="4" /></p>
+<p><input type="radio" name="E01" value="4" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
-<p><input type="radio" name="aquariumI" value="5" /></p>
+<p><input type="radio" name="E01" value="5" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
-<p><input type="radio" name="aquariumI" value="6" /></p>
+<p><input type="radio" name="E01" value="6" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
-<p><input type="radio" name="aquariumI" value="7" /></p>
+<p><input type="radio" name="E01" value="7" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
-<p><input type="radio" name="aquariumI" value="8" /></p>
+<p><input type="radio" name="E01" value="8" /></p>
 <img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
 </label>
-
 <p>&nbsp;</p>
+
+<!--page down-- >
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 </div>
 
+<!--question 2-->
 <div class="page" id="page2">
-<p><img src="http://timbrady.org/turk/images/field.jpg" width="300" alt="" /></p>
-<p><input type="radio" name="fieldI" value="1" /> 1</p>
-<p><input type="radio" name="fieldI" value="2" /> 2</p>
-<p><input type="radio" name="fieldI" value="3" /> 3</p>
-<p><input type="radio" name="fieldI" value="4" /> 4</p>
-<p><input type="radio" name="fieldI" value="5" /> 5</p>
+<p><img src="http://timbrady.org/turk/images/field.jpg" width="500" alt="" /></p>
+<p><input type="radio" name="E02" value="1" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<p><input type="radio" name="E02" value="2" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<p><input type="radio" name="E02" value="3" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<p><input type="radio" name="E02" value="4" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<p><input type="radio" name="E02" value="5" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<p><input type="radio" name="E02" value="6" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<p><input type="radio" name="E02" value="7" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<p><input type="radio" name="E02" value="8" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+</label>
 <p>&nbsp;</p>
+
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<!-- question 3 -->
 <div class="page" id="page3">
-<p><img src="http://timbrady.org/turk/images/valley.jpg" width="300" alt="" /></p>
-<p><input type="radio" name="valleyI" value="1" /> 1</p>
-<p><input type="radio" name="valleyI" value="2" /> 2</p>
-<p><input type="radio" name="valleyI" value="3" /> 3</p>
-<p><input type="radio" name="valleyI" value="4" /> 4</p>
-<p><input type="radio" name="valleyI" value="5" /> 5</p>
+<p><img src="http://timbrady.org/turk/images/valley.jpg" width="500" alt="" /></p>
+<p><input type="radio" name="E03" value="1" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<p><input type="radio" name="E03" value="2" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<p><input type="radio" name="E03" value="3" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<p><input type="radio" name="E03" value="4" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<p><input type="radio" name="E03" value="5" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<p><input type="radio" name="E03" value="6" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<p><input type="radio" name="E03" value="7" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<p><input type="radio" name="E03" value="8" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+</label>
 <p>&nbsp;</p>
+
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<!--question 4-->
 <div class="page" id="page4">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="300" alt="" /></p>
-<p><input type="radio" name="ballpitI" value="1" /> 1</p>
-<p><input type="radio" name="ballpitI" value="2" /> 2</p>
-<p><input type="radio" name="ballpitI" value="3" /> 3</p>
-<p><input type="radio" name="ballpitI" value="4" /> 4</p>
-<p><input type="radio" name="ballpitI" value="5" /> 5</p>
+<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><input type="radio" name="E04" value="1" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<p><input type="radio" name="E04" value="2" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<p><input type="radio" name="E04" value="3" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<p><input type="radio" name="E04" value="4" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<p><input type="radio" name="E04" value="5" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<p><input type="radio" name="E04" value="6" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<p><input type="radio" name="E04" value="7" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<p><input type="radio" name="E04" value="8" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+</label>
 <p>&nbsp;</p>
+
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<div class="page" id="page5">
-<p><img src="https://i.imgur.com/kUCMPWX.jpg" width="300" alt="" /></p>
-<p><input type="radio" name="dogI" value="1" /> 1</p>
-<p><input type="radio" name="dogI" value="2" /> 2</p>
-<p><input type="radio" name="dogI" value="3" /> 3</p>
-<p><input type="radio" name="dogI" value="4" /> 4</p>
-<p><input type="radio" name="dogI" value="5" /> 5</p>
+
+<!--question 05-->
+<div class="page" id="page5”>
+<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><input type="radio" name="E05" value="1" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<p><input type="radio" name="E05" value="2" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<p><input type="radio" name="E05" value="3" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<p><input type="radio" name="E05" value="4" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<p><input type="radio" name="E05" value="5" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<p><input type="radio" name="E05" value="6" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<p><input type="radio" name="E05" value="7" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<p><input type="radio" name="E05" value="8" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+</label>
 <p>&nbsp;</p>
+
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+
+
+<!--questio
+<div class="page" id="page6”>
+<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><input type="radio" name="E06" value="1" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<p><input type="radio" name="E06" value="2" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<p><input type="radio" name="E06" value="3" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<p><input type="radio" name="E06" value="4" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<p><input type="radio" name="E06" value="5" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<p><input type="radio" name="E06" value="6" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<p><input type="radio" name="E06" value="7" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<p><input type="radio" name="E06" value="8" /></p>
+<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
 
 
 
