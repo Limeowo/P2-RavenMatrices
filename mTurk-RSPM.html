@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://timbrady.org/turk/TimTurkTools.js"></script>
 <script>
-var order = new Array(12，11，10，9，8，7，6，5, 4, 3, 2, 1);
+var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
 var currentTrial = 0; // changed from 1 to 0!
 var time_limite = 10;
 
@@ -16,9 +16,7 @@ var timer = setInterval(function(){
 			NextTrial();
 		}
 	},1000);
-</script>
 
-<script>
 $(document).ready(function(){
 	ShowTrial(currentTrial);
 	BlockIfPreview();
@@ -34,7 +32,7 @@ function BlockIfDoneBefore(){
 function BlockIfPreview() {
 	if (IsTurkPreview()) {
 		$('body').append("<div id='previewMode'><p> PREVIEWING THE HIT</p><p> PREVIEWING THE HIT</p><p> PREVIEWING THE HIT</p>");
-
+  
 	}
 }
 */
@@ -52,9 +50,8 @@ function ShowTrial(which) {
 	}
 }
 
-//stop people from not asking but moving on
 function NextTrial() {
-	var checkedValue = $("input[type=radio]:checked",
+	var checkedValue = $("input[type=radio]:checked", 
 		"#page" + order[currentTrial]).val();
 	if(time_limite>0){
 		if (checkedValue) {
@@ -73,14 +70,14 @@ function NextTrial() {
 			ShowTrial(currentTrial);
 			if(currentTrial>12){
 				$("p").hide();
-			}
+			}			
 	}
 }
 
 
 </script>
 
-<!--
+<!-- 
 
 <style> tag = CSS
 CSS is for styling and making things pretty
@@ -88,7 +85,7 @@ CSS is for styling and making things pretty
 -->
 
 <style>
-body {
+body { 
 	font-family: Arial;
 }
 
@@ -140,7 +137,7 @@ img:hover {
 	opacity: 0.30;
 
 /* HIDE RADIO */
-[type=radio] {
+[type=radio] { 
   position: absolute;
   opacity: 0;
   width: 0;
@@ -216,7 +213,7 @@ flex-wrap:wrap;
 </label>
 <p>&nbsp;</p>
 
-<!--page down-- >
+<!--page down-->
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 </div>
