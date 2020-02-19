@@ -5,7 +5,7 @@
 <script>
 var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
 var currentTrial = 0; // changed from 1 to 0!
-var time_limite = 10;
+var time_limite = 60;
 
 
 var timer = setInterval(function(){
@@ -41,7 +41,7 @@ function ShowTrial(which) {
 	if (which >= order.length) {
 		$("#submitButton").show();
 	} else {
-		time_limite = 10;
+		time_limite = 60;
 		var sec = document.getElementById("second");
 		sec.innerHTML = time_limite;
 		$("#page" + order[which]).show();
@@ -165,30 +165,29 @@ If not in <script> or <style>, then you are in HTML
 <h1>
 Raven's matrices
 </h1>
-<p><b id="second">10</b> seconds left</p>
+<p>You have <b id="second"> 60 </b> seconds left</p>
 
 <!--this is instruction part -->
-<h3>Judge these images</h3>
-<p>Please rate how interesting each of these four images is, on a scale from 1-5,  where 5 is the most interesting. There are no wrong answers, just go with your instinct. Pass your mouse over the image for a larger view of it.</p>
+<h3>Please complete these multiple choices. You will have 1 minute for each question. </h3>
+<p>Please choose one image you think will fit into the space.</p>
 
 <!-- question 1 -->
 <div class="page" id="page1">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E1stimulus.png" width="500" alt="" /></p>
+
+
 <label>
 
 <!--this is style for choices-->
 <style>
 .all-img{
-width:870px;
-height:200px;
-border: 100px ;
+width:880px;
 display:flex;
-align-content:flex-start;
 flex-wrap:wrap;
+
 }
 .all-img img{
-	float:left;
-	width:200px;
+	width: 200px;
 }
 </style>
 <div class='all-img'>
@@ -220,278 +219,307 @@ flex-wrap:wrap;
 
 <!--question 2-->
 <div class="page" id="page2">
-<p><img src="http://timbrady.org/turk/images/field.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E2stimulus.png" width="500" alt="" /></p>
+<div class='all-img'>
+
 <p><input type="radio" name="E02" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response1.png">
 <p><input type="radio" name="E02" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response2.png">
 <p><input type="radio" name="E02" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response3.png">
 <p><input type="radio" name="E02" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response4.png">
 <p><input type="radio" name="E02" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response5.png">
 <p><input type="radio" name="E02" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response6.png">
 <p><input type="radio" name="E02" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response7.png">
 <p><input type="radio" name="E02" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E2response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
 </div>
 
 <!-- question 3 -->
 <div class="page" id="page3">
-<p><img src="http://timbrady.org/turk/images/valley.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E3stimulus.png" width="500" alt="" /></p>
+<div class='all-img'>
 <p><input type="radio" name="E03" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response1.png">
 <p><input type="radio" name="E03" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response2.png">
 <p><input type="radio" name="E03" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response3.png">
 <p><input type="radio" name="E03" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response4.png">
 <p><input type="radio" name="E03" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response5.png">
 <p><input type="radio" name="E03" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response6.png">
 <p><input type="radio" name="E03" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response7.png">
 <p><input type="radio" name="E03" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E3response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
 
 <!--question 4-->
 <div class="page" id="page4">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E4stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E04" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response1.png">
 <p><input type="radio" name="E04" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response2.png">
 <p><input type="radio" name="E04" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response3.png">
 <p><input type="radio" name="E04" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response4.png">
 <p><input type="radio" name="E04" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response5.png">
 <p><input type="radio" name="E04" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response6.png">
 <p><input type="radio" name="E04" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response7.png">
 <p><input type="radio" name="E04" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E4response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
 </div>
 
 
 <!--question 05-->
 <div class="page" id="page5">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E5stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E05" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response1.png">
 <p><input type="radio" name="E05" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response2.png">
 <p><input type="radio" name="E05" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response3.png">
 <p><input type="radio" name="E05" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response4.png">
 <p><input type="radio" name="E05" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response5.png">
 <p><input type="radio" name="E05" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response6.png">
 <p><input type="radio" name="E05" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response7.png">
 <p><input type="radio" name="E05" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E5response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
 </div>
 
 <!--question 06-->
 <div class="page" id="page6">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E6stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E06" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response1.png">
 <p><input type="radio" name="E06" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response2.png">
 <p><input type="radio" name="E06" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response3.png">
 <p><input type="radio" name="E06" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response4.png">
 <p><input type="radio" name="E06" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response5.png">
 <p><input type="radio" name="E06" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response6.png">
 <p><input type="radio" name="E06" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response7.png">
 <p><input type="radio" name="E06" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E6response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
+
 
 <!--question 07-->
 <div class="page" id="page7">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E7stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E07" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response1.png">
 <p><input type="radio" name="E07" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response2.png">
 <p><input type="radio" name="E07" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response3.png">
 <p><input type="radio" name="E07" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response4.png">
 <p><input type="radio" name="E07" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response5.png">
 <p><input type="radio" name="E07" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response6.png">
 <p><input type="radio" name="E07" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response7.png">
 <p><input type="radio" name="E07" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E7response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
+
 
 <!--question 08-->
 <div class="page" id="page8">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E8stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E08" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response1.png">
 <p><input type="radio" name="E08" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response2.png">
 <p><input type="radio" name="E08" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response3.png">
 <p><input type="radio" name="E08" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response4.png">
 <p><input type="radio" name="E08" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response5.png">
 <p><input type="radio" name="E08" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response6.png">
 <p><input type="radio" name="E08" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response7.png">
 <p><input type="radio" name="E08" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E8response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
+
 
 <!--question 09-->
 <div class="page" id="page9">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E9stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E09" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response1.png">
 <p><input type="radio" name="E09" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response2.png">
 <p><input type="radio" name="E09" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response3.png">
 <p><input type="radio" name="E09" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response4.png">
 <p><input type="radio" name="E09" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response5.png">
 <p><input type="radio" name="E09" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response6.png">
 <p><input type="radio" name="E09" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response7.png">
 <p><input type="radio" name="E09" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E9response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
+
 
 <!--question 10-->
 <div class="page" id="page10">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E10stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E10" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response1.png">
 <p><input type="radio" name="E10" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response2.png">
 <p><input type="radio" name="E10" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response3.png">
 <p><input type="radio" name="E10" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response4.png">
 <p><input type="radio" name="E10" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response5.png">
 <p><input type="radio" name="E10" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response6.png">
 <p><input type="radio" name="E10" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response7.png">
 <p><input type="radio" name="E10" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E10response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
+
 
 <!--question 11-->
 <div class="page" id="page11">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E11stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E11" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response1.png">
 <p><input type="radio" name="E11" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response2.png">
 <p><input type="radio" name="E11" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response3.png">
 <p><input type="radio" name="E11" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response4.png">
 <p><input type="radio" name="E11" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response5.png">
 <p><input type="radio" name="E11" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response6.png">
 <p><input type="radio" name="E11" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response7.png">
 <p><input type="radio" name="E11" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E11response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+</div>
+
 
 <!--question 12-->
 <div class="page" id="page12">
-<p><img src="http://timbrady.org/turk/images/ballpit.jpg" width="500" alt="" /></p>
+<p><img src="https://casasanto.com/images/ravenSPMEset/E12stimulus.png" width="500" alt="" /></p>
+<div class = 'all-img'>
 <p><input type="radio" name="E12" value="1" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response1.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response1.png">
 <p><input type="radio" name="E12" value="2" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response2.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response2.png">
 <p><input type="radio" name="E12" value="3" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response3.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response3.png">
 <p><input type="radio" name="E12" value="4" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response4.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response4.png">
 <p><input type="radio" name="E12" value="5" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response5.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response5.png">
 <p><input type="radio" name="E12" value="6" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response6.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response6.png">
 <p><input type="radio" name="E12" value="7" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response7.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response7.png">
 <p><input type="radio" name="E12" value="8" /></p>
-<img src="file:///Users/gaojie/Desktop/raven%20screenshot/E1response8.png">
+<img src="https://casasanto.com/images/ravenSPMEset/E12response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
 </div>
 
 
