@@ -1,0 +1,527 @@
+<!--Project: Raven Matrices on Mturk
+  2020-02-13 Shikun, Mingtong -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://timbrady.org/turk/TimTurkTools.js"></script>
+<script>
+var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13);
+var currentTrial = 0; // changed from 1 to 0!
+var time_limite = 60;
+
+
+var timer = setInterval(function(){
+	time_limite--;
+	var sec = document.getElementById("second");
+	sec.innerHTML = time_limite;
+	if(time_limite<=0){
+			NextTrial();
+		}
+	},1000);
+
+$(document).ready(function(){
+	ShowTrial(currentTrial);
+	BlockIfPreview();
+	CheckBlockList('Tim_ColorMemory', BlockIfDoneBefore);
+	$("#submitButton").hide();
+});
+/*
+function BlockIfDoneBefore(){
+	$('body').html(
+		"<p>Sorry, you have already done a HIT like this one and aren't eligible for this HIT. Please return it. Thanks!</p>"
+		)
+}
+function BlockIfPreview() {
+	if (IsTurkPreview()) {
+		$('body').append("<div id='previewMode'><p> PREVIEWING THE HIT</p><p> PREVIEWING THE HIT</p><p> PREVIEWING THE HIT</p>");
+
+	}
+}
+*/
+
+function ShowTrial(which) {
+	if (which >= order.length) {
+		$("#submitButton").show();
+	} else {
+		time_limite = 60;
+		var sec = document.getElementById("second");
+		sec.innerHTML = time_limite;
+		$("#page" + order[which]).show();
+		var showTrial = which+1; // 0 indexed to 1 indexed
+		$(".currentTrialIndicator").text("Current trial: " + showTrial + " of " + order.length);
+	}
+}
+
+/*function ShowConsent(){
+	  var continuebotton = ("input[type=radio]:checked");
+		if(continuebotton){
+			ShowConsent(consentTrial).hide();
+			consentTrial++;
+			if (consentTrial>=1){
+				ShowTrial(currentTrial);
+			}
+		} else {
+			alert('Please answers the question before moving on!');
+		}
+}
+*/
+function NextTrial() {
+	var checkedValue = $("input[type=radio]:checked",
+		"#page" + order[currentTrial]).val();
+	if(time_limite>0){
+		if (checkedValue) {
+			$("#page" + order[currentTrial]).hide();
+			currentTrial++;
+			if(currentTrial<=12){
+				ShowTrial(currentTrial);
+			}
+		} else {
+			alert('Please answer the question before moving on!');
+		}
+	}
+	else{
+			$("#page" + order[currentTrial]).hide();
+			currentTrial++;
+			ShowTrial(currentTrial);
+			if(currentTrial>12){
+				$("p").hide();
+			}
+	}
+}
+
+
+</script>
+
+<!--
+
+<style> tag = CSS
+CSS is for styling and making things pretty
+
+-->
+
+<style>
+body {
+	font-family: Arial;
+}
+
+.page {
+	display: none;
+	margin-top: 30px;
+	color: blue;
+	font-weight: bold;
+}
+
+.page p {
+	margin-top: -8px;
+	font-weight: bold;
+}
+
+/*
+img:hover {
+	width: 500px;
+}
+*/
+.currentTrialIndicator {
+	font-family: Arial;
+	font-size: 9pt;
+	padding-left: 10px;
+}
+
+.nextLink {
+	background: gray;
+	border: 3px outset black;
+	padding: 8px;
+	color: white;
+	font-family: Arial;
+	font-size: 14pt;
+}
+
+#previewMode p {
+	margin-top: 100px;
+}
+
+#previewMode {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	text-align: center;
+	height: 100%;
+	font-size: 30pt;
+	background: gray;
+	opacity: 0.30;
+
+/* HIDE RADIO */
+[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f00;
+}
+
+}
+</style>
+
+<!--
+
+If not in <script> or <style>, then you are in HTML
+
+ -->
+<h1>
+Raven's matrices
+</h1>
+<p>You have <b id="second"> 60 </b> seconds left</p>
+
+<!--this is instruction part -->
+<h3>Please complete these multiple choices. You will have 1 minute for each question. </h3>
+<p>Please choose one image you think will fit into the space.</p>
+
+<!-- question 1 -->
+<div class="page" id="page1">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E1stimulus.png" width="500" alt="" /></p>
+
+<label>
+
+	<!-- question 1 choices-->
+	
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E01" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response1.png"> </td>
+      <td><input type="radio" name="E01" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E1response2.png"></td>
+			<td><input type="radio" name="E01" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response3.png"></td>
+			<td><input type="radio" name="E01" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-100" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response5.png"></td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-50" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response6.png"></td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="0" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response7.png"></td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="50" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response8.png"></td>
+		</tr>
+	</table>
+</label>
+<p>&nbsp;</p>
+<!--page down-->
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+<!--question 2-->
+<div class="page" id="page2">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E2stimulus.png" width="500" alt="" /></p>
+
+<p><input type="radio" name="E02" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response1.png">
+<p><input type="radio" name="E02" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response2.png">
+<p><input type="radio" name="E02" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response3.png">
+<p><input type="radio" name="E02" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response4.png">
+<p><input type="radio" name="E02" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response5.png">
+<p><input type="radio" name="E02" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response6.png">
+<p><input type="radio" name="E02" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response7.png">
+<p><input type="radio" name="E02" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+<!-- question 3 -->
+<div class="page" id="page3">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E3stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E03" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response1.png">
+<p><input type="radio" name="E03" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response2.png">
+<p><input type="radio" name="E03" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response3.png">
+<p><input type="radio" name="E03" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response4.png">
+<p><input type="radio" name="E03" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response5.png">
+<p><input type="radio" name="E03" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response6.png">
+<p><input type="radio" name="E03" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response7.png">
+<p><input type="radio" name="E03" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+<!--question 4-->
+<div class="page" id="page4">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E4stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E04" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response1.png">
+<p><input type="radio" name="E04" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response2.png">
+<p><input type="radio" name="E04" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response3.png">
+<p><input type="radio" name="E04" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response4.png">
+<p><input type="radio" name="E04" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response5.png">
+<p><input type="radio" name="E04" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response6.png">
+<p><input type="radio" name="E04" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response7.png">
+<p><input type="radio" name="E04" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+<!--question 05-->
+<div class="page" id="page5">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E5stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E05" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response1.png">
+<p><input type="radio" name="E05" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response2.png">
+<p><input type="radio" name="E05" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response3.png">
+<p><input type="radio" name="E05" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response4.png">
+<p><input type="radio" name="E05" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response5.png">
+<p><input type="radio" name="E05" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response6.png">
+<p><input type="radio" name="E05" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response7.png">
+<p><input type="radio" name="E05" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+<!--question 06-->
+<div class="page" id="page6">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E6stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E06" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response1.png">
+<p><input type="radio" name="E06" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response2.png">
+<p><input type="radio" name="E06" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response3.png">
+<p><input type="radio" name="E06" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response4.png">
+<p><input type="radio" name="E06" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response5.png">
+<p><input type="radio" name="E06" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response6.png">
+<p><input type="radio" name="E06" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response7.png">
+<p><input type="radio" name="E06" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+<!--question 07-->
+<div class="page" id="page7">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E7stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E07" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response1.png">
+<p><input type="radio" name="E07" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response2.png">
+<p><input type="radio" name="E07" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response3.png">
+<p><input type="radio" name="E07" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response4.png">
+<p><input type="radio" name="E07" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response5.png">
+<p><input type="radio" name="E07" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response6.png">
+<p><input type="radio" name="E07" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response7.png">
+<p><input type="radio" name="E07" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+
+<!--question 08-->
+<div class="page" id="page8">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E8stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E08" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response1.png">
+<p><input type="radio" name="E08" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response2.png">
+<p><input type="radio" name="E08" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response3.png">
+<p><input type="radio" name="E08" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response4.png">
+<p><input type="radio" name="E08" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response5.png">
+<p><input type="radio" name="E08" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response6.png">
+<p><input type="radio" name="E08" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response7.png">
+<p><input type="radio" name="E08" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+
+<!--question 09-->
+<div class="page" id="page9">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E9stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E09" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response1.png">
+<p><input type="radio" name="E09" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response2.png">
+<p><input type="radio" name="E09" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response3.png">
+<p><input type="radio" name="E09" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response4.png">
+<p><input type="radio" name="E09" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response5.png">
+<p><input type="radio" name="E09" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response6.png">
+<p><input type="radio" name="E09" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response7.png">
+<p><input type="radio" name="E09" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+
+<!--question 10-->
+<div class="page" id="page10">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E10stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E10" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response1.png">
+<p><input type="radio" name="E10" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response2.png">
+<p><input type="radio" name="E10" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response3.png">
+<p><input type="radio" name="E10" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response4.png">
+<p><input type="radio" name="E10" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response5.png">
+<p><input type="radio" name="E10" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response6.png">
+<p><input type="radio" name="E10" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response7.png">
+<p><input type="radio" name="E10" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+<!--question 11-->
+<div class="page" id="page11">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E11stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E11" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response1.png">
+<p><input type="radio" name="E11" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response2.png">
+<p><input type="radio" name="E11" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response3.png">
+<p><input type="radio" name="E11" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response4.png">
+<p><input type="radio" name="E11" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response5.png">
+<p><input type="radio" name="E11" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response6.png">
+<p><input type="radio" name="E11" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response7.png">
+<p><input type="radio" name="E11" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+
+<!--question 12-->
+<div class="page" id="page12">
+<p><img src="https://casasanto.com/images/ravenSPMEset/E12stimulus.png" width="500" alt="" /></p>
+<p><input type="radio" name="E12" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response1.png">
+<p><input type="radio" name="E12" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response2.png">
+<p><input type="radio" name="E12" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response3.png">
+<p><input type="radio" name="E12" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response4.png">
+<p><input type="radio" name="E12" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response5.png">
+<p><input type="radio" name="E12" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response6.png">
+<p><input type="radio" name="E12" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response7.png">
+<p><input type="radio" name="E12" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response8.png">
+</label>
+<p>&nbsp;</p>
+
+<a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
+</div>
+
+<div class="page" id="page13">
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b> What do you think the experiment is about? </b></p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" name="Country" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
+</div>
+
+
+<!--
+<div class="page" id="page5">
+<p>How did you like this HIT?</p>
+<p><input type="text" name="howLike" value="" /></p>
+<p>&nbsp;</p>
+</div>
+
+<input type="submit" id="submitButton">
