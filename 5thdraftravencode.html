@@ -24,7 +24,7 @@ $(document).ready(function(){
 	CheckBlockList('Tim_ColorMemory', BlockIfDoneBefore);
 	$("#submitButton").hide();
 });
-/*
+
 function BlockIfDoneBefore(){
 	$('body').html(
 		"<p>Sorry, you have already done a HIT like this one and aren't eligible for this HIT. Please return it. Thanks!</p>"
@@ -36,7 +36,34 @@ function BlockIfPreview() {
 
 	}
 }
-*/
+
+// This function loads the block if preview text and displays the consent form once the page loads
+$(document).ready(function(){
+//    BlockIfPreview();
+    ShowConsent();
+});
+
+// keeps track of the order in the output file
+document.write('<input type="hidden" name="Order" value="' + order.toString() + '">');
+
+
+// this disables the enter button. I added this because mTurk
+// has a bug where if the ppt presses "enter" or "return" the HIT is submitted
+$('html').bind('keypress', function(e) {
+   if(e.keyCode == 13) {
+      return false;
+   }
+});
+// Stops people from viewing the whole HIT before consenting.
+function BlockIfPreview() {
+    if (IsTurkPreview()) {
+        $('body').append(
+                "<div id='previewMode'>" +
+                    "<p>PREVIEWING THE HIT</p>" +
+                    "<p>PREVIEWING THE HIT</p>" +
+                    "<p>PREVIEWING THE HIT</p></div>");
+    }
+}
 
 function ShowTrial(which) {
 	if (which >= order.length) {
@@ -107,6 +134,8 @@ function StartTrial() {
 	startTrialTime = new Date().getTime();
 }
 
+
+
 </script>
 
 <!--
@@ -168,6 +197,9 @@ img:hover {
 	background: gray;
 	opacity: 0.30;
 
+#consent {
+	    display: block;
+	}
 
 /* HIDE RADIO */
 [type=radio] {
@@ -195,6 +227,46 @@ img:hover {
 If not in <script> or <style>, then you are in HTML
 
  -->
+ <div id="consent">
+ <section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+ <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+ <div class="panel panel-primary">
+ <div class="panel-heading"><strong>Consent</strong></div>
+
+ <div class="panel-body">
+ <p align="center">***Please make sure to Accept this HIT before giving consent.***</p>
+ You are being asked to participate in a research study in cognitive science by the Experience and Cognition Lab at Cornell University. Through this work, we hope to gain a better understanding of the nature of language and cognition.<br />
+ <br />
+ <b>What you'll be asked to do.</b> You will be asked to perform a brief task which may include: reading words or sentences, naming pictures, learning about objects or sounds, and making judgments about words, pictures, or sounds. The tasks may involve reading and looking at pictures, or hearing words or sounds through headphones. You may be asked to make responses by pressing keys, speaking aloud, and/or filling out questionnaires.<br />
+ <br />
+ <b>Risks/benefits/compensation</b> We do not anticipate any risks from participating in this research. There are no direct benefits associated with this research. You will be compensated as stated on the HIT and in line with the policies of Amazon Mechanical Turk.<br />
+ <br />
+ <b>Confidentiality</b> Your participation in this study will remain confidential, and your identifying information will not be stored with your data. Servers and computers where the data and images are stored are password protected. Only people authorized by the Principal Investigator will be granted access to the data. The data will be used for research and educational purposes, such as teaching, publications, and/or presentations and may be viewed by students, other trainees, and professional colleagues. In any sort of report we make public, we will not include any information that will make it reasonably possible to identify you. Please note that this research is being conducted with the help of Amazon Mechanical Turk, a company not affiliated with Cornell and with its own privacy and security policies that you can find at its website. We anticipate that your participation in this survey presents no greater risk than everyday use of the internet.<br />
+ <br />
+ <b>Taking part in this study is completely voluntary</b>. If you have no objection to a question, then please answer every question. It is better to answer than to leave it blank (even if you are unsure). If you decide not to take part or not to complete the study, it will not affect your current or future relationship with Cornell University.<br />
+ <br />
+ If you have questions or concerns, please use the &ldquo;Contact this requester link.&rdquo; If you have any questions or concerns regarding your rights as a subject in this study, you may contact the Institutional Review Board (IRB) for Human Participants at 607-255-5138 or access their website at http://www.irb.cornell.edu. You may also report your concerns or complaints anonymously through Ethicspoint online at www.hotline.cornell.edu or by calling toll free at 1-866-293-3077. Ethicspoint is an independent organization that serves as a liaison between the University and the person bringing the complaint so that anonymity can be ensured.<br />
+ <br />
+ <b>Statement of Consent</b> Please click &ldquo;Yes, I consent&rdquo; if you have read the above information, are 18 years of age or older, and consent to take part in this study.<br />
+ &nbsp;
+ <p align="center">Approved by Cornell IRB 10/02/2017<br />
+ Expires 10/1/2018</p>
+
+ <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="consent" type="radio" value="Yes" />&nbsp;Yes, I consent</label></div>
+
+ <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="consent" type="radio" value="No" />&nbsp;No, I do not consent</label></div>
+
+ <p>&nbsp;</p>
+ <a class="nextLink" href="javascript:ShowConsent()">Continue</a>
+
+ <p>&nbsp;</p>
+ </div>
+ </div>
+ </div>
+ </section>
+ </div>
+
+
 <h1>
 Raven's matrices
 </h1>
