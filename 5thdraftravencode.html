@@ -24,7 +24,7 @@ $(document).ready(function(){
 	CheckBlockList('Tim_ColorMemory', BlockIfDoneBefore);
 	$("#submitButton").hide();
 });
-
+/*
 function BlockIfDoneBefore(){
 	$('body').html(
 		"<p>Sorry, you have already done a HIT like this one and aren't eligible for this HIT. Please return it. Thanks!</p>"
@@ -36,6 +36,7 @@ function BlockIfPreview() {
 
 	}
 }
+*/
 
 // This function loads the block if preview text and displays the consent form once the page loads
 $(document).ready(function(){
@@ -91,7 +92,7 @@ function ShowTrial(which) {
 		}
 }
 */
-function NextTrial() {
+function NextTrial(){
 	var currentTime = new Date().getTime();//here define Response Time
 	var RT = currentTime - startTrialTime;
 	$('#problem'+currentTrial +'RT').val(RT)
