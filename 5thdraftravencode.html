@@ -2,11 +2,12 @@
   2020-02-13 Shikun, Mingtong -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://timbrady.org/turk/TimTurkTools.js"></script>
+
 <script>
 var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13);
 var currentTrial = 0; // changed from 1 to 0!
 var time_limite = 60;
-
+var startTrialTime = 0;
 
 var timer = setInterval(function(){
 	time_limite--;
@@ -82,11 +83,34 @@ function NextTrial() {
 			currentTrial++;
 			ShowTrial(currentTrial);
 			if(currentTrial>12){
+				$('#submitButton').show();
+				$('#thanks').show()
 				$("p").hide();
 			}
 	}
+
+	var currentTime = new Date().getTime();//here define Response Time
+	var RT = currentTime - startTrialTime;
+	$('#problem'+currentTrial +'RT').val(RT)
+
+	$('#problem'+currentTrial +'RT').hide();
+
+	}
 }
 
+function StartTrial() {
+	if (trialRunning) {
+		return;
+	}
+
+	if (IsTurkPreview()) {
+		alert("Please accept the HIT before starting!");
+		return;
+	}
+
+	trialRunning = true;
+	startTrialTime = new Date().getTime();
+}
 
 </script>
 
@@ -149,6 +173,10 @@ img:hover {
 	background: gray;
 	opacity: 0.30;
 
+#thanks{
+	display:none;
+}
+
 /* HIDE RADIO */
 [type=radio] {
   position: absolute;
@@ -191,7 +219,7 @@ Raven's matrices
 <label>
 
 	<!-- question 1 choices-->
-	
+
 <table style="width:50%">
 	<tbody>
 		<tr>
@@ -222,6 +250,8 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E01_rt" name="E01_rt" value="">
+
 <!--question 2-->
 <div class="page" id="page2">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E2stimulus.png" width="500" alt="" /></p>
@@ -248,6 +278,8 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E02_rt" name="E02_rt" value="">
+
 <!-- question 3 -->
 <div class="page" id="page3">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E3stimulus.png" width="500" alt="" /></p>
@@ -272,6 +304,8 @@ Raven's matrices
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+
+<input type ="hidden" id="E03_rt" name="E03_rt" value="">
 
 <!--question 4-->
 <div class="page" id="page4">
@@ -298,6 +332,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E04_rt" name="E04_rt" value="">
 
 <!--question 05-->
 <div class="page" id="page5">
@@ -324,6 +359,8 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E05_rt" name="E05_rt" value="">
+
 <!--question 06-->
 <div class="page" id="page6">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E6stimulus.png" width="500" alt="" /></p>
@@ -349,6 +386,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E06_rt" name="E06_rt" value="">
 
 <!--question 07-->
 <div class="page" id="page7">
@@ -375,7 +413,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-
+<input type ="hidden" id="E07_rt" name="E07_rt" value="">
 
 <!--question 08-->
 <div class="page" id="page8">
@@ -402,6 +440,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E08_rt" name="E08_rt" value="">
 
 
 <!--question 09-->
@@ -429,7 +468,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-
+<input type ="hidden" id="E09_rt" name="E09_rt" value="">
 
 <!--question 10-->
 <div class="page" id="page10">
@@ -456,6 +495,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E10_rt" name="E10_rt" value="">
 
 <!--question 11-->
 <div class="page" id="page11">
@@ -482,6 +522,7 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E11_rt" name="E11_rt" value="">
 
 <!--question 12-->
 <div class="page" id="page12">
@@ -507,6 +548,7 @@ Raven's matrices
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+<input type ="hidden" id="E12_rt" name="E12_rt" value="">
 
 <div class="page" id="page13">
 <p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b> What do you think the experiment is about? </b></p>
@@ -517,11 +559,13 @@ Raven's matrices
 </div>
 
 
-<!--
-<div class="page" id="page5">
+
+<div class="page" id="page13">
 <p>How did you like this HIT?</p>
 <p><input type="text" name="howLike" value="" /></p>
 <p>&nbsp;</p>
 </div>
 
-<input type="submit" id="submitButton">
+<div id="thanks">Thanks! Please submit:</div>
+
+<input type="submit" id="submitButton" name="submitButton">
