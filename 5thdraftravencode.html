@@ -2,12 +2,11 @@
   2020-02-13 Shikun, Mingtong -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://timbrady.org/turk/TimTurkTools.js"></script>
-
 <script>
-var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13);
+var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
 var currentTrial = 0; // changed from 1 to 0!
 var time_limite = 60;
-var startTrialTime = 0;
+
 
 var timer = setInterval(function(){
 	time_limite--;
@@ -19,7 +18,7 @@ var timer = setInterval(function(){
 	},1000);
 
 $(document).ready(function(){
-	ShowTrial(currentTrial);
+	ShowTrial(consent);
 	BlockIfPreview();
 	CheckBlockList('Tim_ColorMemory', BlockIfDoneBefore);
 	$("#submitButton").hide();
@@ -38,34 +37,35 @@ function BlockIfPreview() {
 }
 */
 
-// This function loads the block if preview text and displays the consent form once the page loads
-$(document).ready(function(){
-//    BlockIfPreview();
-    ShowConsent();
-});
+function ShowConsent() {
+	var consent_radio = $("input[type=radio]:checked", ("#consent")).val();
 
-// keeps track of the order in the output file
-document.write('<input type="hidden" name="Order" value="' + order.toString() + '">');
+	if (consent_radio == "Yes") {
+		$("#consent").hide();
+		$("#consent_heading_css").hide();
+		$('#instructions').show();	
+ 	} else if (consent_radio == "No") {
+	 	alert("You've elected not to give consent. Please return this HIT.");
+	 	$("#consent").show();
+	}
+}
 
+function StartExperiment() {
+	$('#instructions').hide();
+	$("#page" + order[0]).show();
+}
 
-// this disables the enter button. I added this because mTurk
-// has a bug where if the ppt presses "enter" or "return" the HIT is submitted
-$('html').bind('keypress', function(e) {
-   if(e.keyCode == 13) {
-      return false;
-   }
-});
-// Stops people from viewing the whole HIT before consenting.
-function BlockIfPreview() {
-    if (IsTurkPreview()) {
-        $('body').append(
-                "<div id='previewMode'>" +
-                    "<p>PREVIEWING THE HIT</p>" +
-                    "<p>PREVIEWING THE HIT</p>" +
-                    "<p>PREVIEWING THE HIT</p></div>");
+//goes through trial screens
+function ShowTrial(which) {
+	if (which < order.length) {
+		$("#page" + order[which]).show();
+    } else if (which >= order.length) {
+    	$("#page" + order[which]).hide();
+      	$("#version1page26").show();
     }
 }
 
+/*
 function ShowTrial(which) {
 	if (which >= order.length) {
 		$("#submitButton").show();
@@ -78,32 +78,24 @@ function ShowTrial(which) {
 		$(".currentTrialIndicator").text("Current trial: " + showTrial + " of " + order.length);
 	}
 }
-
-/*function ShowConsent(){
-	  var continuebotton = ("input[type=radio]:checked");
-		if(continuebotton){
-			ShowConsent(consentTrial).hide();
-			consentTrial++;
-			if (consentTrial>=1){
-				ShowTrial(currentTrial);
-			}
-		} else {
-			alert('Please answers the question before moving on!');
-		}
-}
 */
-function NextTrial(){
-	var currentTime = new Date().getTime();//here define Response Time
-	var RT = currentTime - startTrialTime;
-	$('#problem'+currentTrial +'RT').val(RT)
-	$('#problem'+currentTrial +'RT').hide();
 
+// records reaction times. Put this function in the successful if else function
+// 1. make javascript RT = currentTrialTime - 60seconds
+// 2. turn javascript RT variable into HTML variable (example. HTML_RT)
+// 3. use "document.write..." function to write/record the HTML RT variable
+// currentTime - 60seconds = RT
+document.write('<input type="hidden" name="reactionTime" value="HTML_RT">');
+
+
+function NextTrial() {
 	var checkedValue = $("input[type=radio]:checked",
 		"#page" + order[currentTrial]).val();
 	if(time_limite>0){
 		if (checkedValue) {
 			$("#page" + order[currentTrial]).hide();
 			currentTrial++;
+			//document.write('<input type="hidden" name="reactionTime" value="HTML_RT">');
 			if(currentTrial<=12){
 				ShowTrial(currentTrial);
 			}
@@ -118,33 +110,85 @@ function NextTrial(){
 			if(currentTrial>12){
 				$("p").hide();
 			}
-		}
+	}
 }
 
-function StartTrial() {
-	if (trialRunning) {
-		return;
-	}
+// demographic buttons
 
-	if (IsTurkPreview()) {
-		alert("Please accept the HIT before starting!");
-		return;
-	}
 
-	trialRunning = true;
-	startTrialTime = new Date().getTime();
+
+function NextButtonSex() {
+	var consent_radio = $("input[type=radio]:checked", ("#version1page26")).val();
+
+	if (consent_radio) {
+		$("#version1page26").hide();
+		$('#version1page27').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page26").show();
+	}
 }
 
+function NextButtonLanguage() {
+	var consent_radio = $("input[type=radio]:checked", ("#version1page27")).val();
+
+	if (consent_radio) {
+		$("#version1page27").hide();
+		$('#version1page28').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page27").show();
+	}
+}
+
+function NextButtonHeight() {
+	var ftBox = $("#version1HeightFt");
+	var inBox = $("#version1HeightIn");
+	//var inp = $("input[type=text]", ("#version1page28"));
+
+	if (ftBox.val().length > 0 && inBox.val().length > 0) {
+		$("#version1page28").hide();
+		$('#version1page29').show();	
+ 	} else {
+	 	alert("Please answer both input fields");
+		$("#version1page28").show();
+	}
+
+
+}
+
+function NextButtonAge() {
+	var age = $("#Age");
+	//var inp = $("input[type=text]", ("#version1page28"));
+
+	if (age.val().length > 0) {
+		$("#version1page29").hide();
+		$('#version1page30').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page29").show();
+	}
+
+
+}
+
+
+//Moves you through the check box trials
+// here is the code for checkboxes
+function NextCheckboxTrial() {
+	if ($('input:checkbox:checked').length == 0) {
+		alert('Please answer the question before moving on!');
+	} else {
+		$("#Page" + order[currentTrial]).hide();
+		currentTrial++;
+		ShowTrial(currentTrial);
+	}
+}
 
 
 </script>
 
-<!--
 
-<style> tag = CSS
-CSS is for styling and making things pretty
-
--->
 
 <style>
 body {
@@ -198,10 +242,6 @@ img:hover {
 	background: gray;
 	opacity: 0.30;
 
-#consent {
-	    display: block;
-	}
-
 /* HIDE RADIO */
 [type=radio] {
   position: absolute;
@@ -228,54 +268,61 @@ img:hover {
 If not in <script> or <style>, then you are in HTML
 
  -->
- <div id="consent">
- <section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
- <div class="row col-xs-12 col-md-12"><!-- Instructions -->
- <div class="panel panel-primary">
- <div class="panel-heading"><strong>Consent</strong></div>
-
- <div class="panel-body">
- <p align="center">***Please make sure to Accept this HIT before giving consent.***</p>
- You are being asked to participate in a research study in cognitive science by the Experience and Cognition Lab at Cornell University. Through this work, we hope to gain a better understanding of the nature of language and cognition.<br />
- <br />
- <b>What you'll be asked to do.</b> You will be asked to perform a brief task which may include: reading words or sentences, naming pictures, learning about objects or sounds, and making judgments about words, pictures, or sounds. The tasks may involve reading and looking at pictures, or hearing words or sounds through headphones. You may be asked to make responses by pressing keys, speaking aloud, and/or filling out questionnaires.<br />
- <br />
- <b>Risks/benefits/compensation</b> We do not anticipate any risks from participating in this research. There are no direct benefits associated with this research. You will be compensated as stated on the HIT and in line with the policies of Amazon Mechanical Turk.<br />
- <br />
- <b>Confidentiality</b> Your participation in this study will remain confidential, and your identifying information will not be stored with your data. Servers and computers where the data and images are stored are password protected. Only people authorized by the Principal Investigator will be granted access to the data. The data will be used for research and educational purposes, such as teaching, publications, and/or presentations and may be viewed by students, other trainees, and professional colleagues. In any sort of report we make public, we will not include any information that will make it reasonably possible to identify you. Please note that this research is being conducted with the help of Amazon Mechanical Turk, a company not affiliated with Cornell and with its own privacy and security policies that you can find at its website. We anticipate that your participation in this survey presents no greater risk than everyday use of the internet.<br />
- <br />
- <b>Taking part in this study is completely voluntary</b>. If you have no objection to a question, then please answer every question. It is better to answer than to leave it blank (even if you are unsure). If you decide not to take part or not to complete the study, it will not affect your current or future relationship with Cornell University.<br />
- <br />
- If you have questions or concerns, please use the &ldquo;Contact this requester link.&rdquo; If you have any questions or concerns regarding your rights as a subject in this study, you may contact the Institutional Review Board (IRB) for Human Participants at 607-255-5138 or access their website at http://www.irb.cornell.edu. You may also report your concerns or complaints anonymously through Ethicspoint online at www.hotline.cornell.edu or by calling toll free at 1-866-293-3077. Ethicspoint is an independent organization that serves as a liaison between the University and the person bringing the complaint so that anonymity can be ensured.<br />
- <br />
- <b>Statement of Consent</b> Please click &ldquo;Yes, I consent&rdquo; if you have read the above information, are 18 years of age or older, and consent to take part in this study.<br />
- &nbsp;
- <p align="center">Approved by Cornell IRB 10/02/2017<br />
- Expires 10/1/2018</p>
-
- <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="consent" type="radio" value="Yes" />&nbsp;Yes, I consent</label></div>
-
- <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="consent" type="radio" value="No" />&nbsp;No, I do not consent</label></div>
-
- <p>&nbsp;</p>
- <a class="nextLink" href="javascript:ShowConsent()">Continue</a>
-
- <p>&nbsp;</p>
- </div>
- </div>
- </div>
- </section>
- </div>
-
-
 <h1>
 Raven's matrices
 </h1>
 <p>You have <b id="second"> 60 </b> seconds left</p>
 
+<!-- consent form -->
+
+<div id="consent">
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+<div class="row col-xs-12 col-md-12"><!-- Instructions -->
+<div class="panel panel-primary">
+<div class="panel-heading"><strong>Consent</strong></div>
+
+<div class="panel-body">
+<p align="center">***Please make sure to Accept this HIT before giving consent.***</p>
+You are being asked to participate in a research study in cognitive science by the Experience and Cognition Lab at Cornell University. Through this work, we hope to gain a better understanding of the nature of language and cognition.<br />
+<br />
+<b>What you'll be asked to do.</b> You will be asked to perform a brief task which may include: reading words or sentences, naming pictures, learning about objects or sounds, and making judgments about words, pictures, or sounds. The tasks may involve reading and looking at pictures, or hearing words or sounds through headphones. You may be asked to make responses by pressing keys, speaking aloud, and/or filling out questionnaires.<br />
+<br />
+<b>Risks/benefits/compensation</b> We do not anticipate any risks from participating in this research. There are no direct benefits associated with this research. You will be compensated as stated on the HIT and in line with the policies of Amazon Mechanical Turk.<br />
+<br />
+<b>Confidentiality</b> Your participation in this study will remain confidential, and your identifying information will not be stored with your data. Servers and computers where the data and images are stored are password protected. Only people authorized by the Principal Investigator will be granted access to the data. The data will be used for research and educational purposes, such as teaching, publications, and/or presentations and may be viewed by students, other trainees, and professional colleagues. In any sort of report we make public, we will not include any information that will make it reasonably possible to identify you. Please note that this research is being conducted with the help of Amazon Mechanical Turk, a company not affiliated with Cornell and with its own privacy and security policies that you can find at its website. We anticipate that your participation in this survey presents no greater risk than everyday use of the internet.<br />
+<br />
+<b>Taking part in this study is completely voluntary</b>. If you have no objection to a question, then please answer every question. It is better to answer than to leave it blank (even if you are unsure). If you decide not to take part or not to complete the study, it will not affect your current or future relationship with Cornell University.<br />
+<br />
+If you have questions or concerns, please use the &ldquo;Contact this requester link.&rdquo; If you have any questions or concerns regarding your rights as a subject in this study, you may contact the Institutional Review Board (IRB) for Human Participants at 607-255-5138 or access their website at http://www.irb.cornell.edu. You may also report your concerns or complaints anonymously through Ethicspoint online at www.hotline.cornell.edu or by calling toll free at 1-866-293-3077. Ethicspoint is an independent organization that serves as a liaison between the University and the person bringing the complaint so that anonymity can be ensured.<br />
+<br />
+<b>Statement of Consent</b> Please click &ldquo;Yes, I consent&rdquo; if you have read the above information, are 18 years of age or older, and consent to take part in this study.<br />
+&nbsp;
+<p align="center">Approved by Cornell IRB 10/02/2017<br />
+Expires 10/1/2018</p>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="consent_radio" type="radio" value="Yes" />&nbsp;Yes, I consent</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="consent_radio" type="radio" value="No" />&nbsp;No, I do not consent</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:ShowConsent()">Continue</a>
+
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+
 <!--this is instruction part -->
+<div class="page" id="instructions">
 <h3>Please complete these multiple choices. You will have 1 minute for each question. </h3>
 <p>Please choose one image you think will fit into the space.</p>
+<p> testing instructions page </p>
+<a class="nextLink" href="javascript:StartExperiment()">Continue</a>
+</div>
+
 
 <!-- question 1 -->
 <div class="page" id="page1">
@@ -284,7 +331,7 @@ Raven's matrices
 <label>
 
 	<!-- question 1 choices-->
-
+	
 <table style="width:50%">
 	<tbody>
 		<tr>
@@ -299,13 +346,13 @@ Raven's matrices
 		</tr>
 		<tr>
 
-			<td style="text-align: center"><input name="E01" type="radio" value="5" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-100" />&nbsp;</td>
 			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response5.png"></td>
-			<td style="text-align: center"><input name="E01" type="radio" value="6" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-50" />&nbsp;</td>
 			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response6.png"></td>
-			<td style="text-align: center"><input name="E01" type="radio" value="7" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="0" />&nbsp;</td>
 			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response7.png"></td>
-			<td style="text-align: center"><input name="E01" type="radio" value="8" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="50" />&nbsp;</td>
 			<td><img src="https://casasanto.com/images/ravenSPMEset/E1response8.png"></td>
 		</tr>
 	</table>
@@ -315,410 +362,599 @@ Raven's matrices
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E01_rt" name="E01_rt" value="">
-
 <!--question 2-->
 <div class="page" id="page2">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E2stimulus.png" width="500" alt="" /></p>
 
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E02" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response1.png"> </td>
-      <td><input type="radio" name="E02" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E2response2.png"></td>
-			<td><input type="radio" name="E02" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response3.png"></td>
-			<td><input type="radio" name="E02" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E02" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response5.png"></td>
-			<td style="text-align: center"><input name="E02" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response6.png"></td>
-			<td style="text-align: center"><input name="E02" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response7.png"></td>
-			<td style="text-align: center"><input name="E02" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E02" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response1.png">
+<p><input type="radio" name="E02" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response2.png">
+<p><input type="radio" name="E02" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response3.png">
+<p><input type="radio" name="E02" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response4.png">
+<p><input type="radio" name="E02" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response5.png">
+<p><input type="radio" name="E02" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response6.png">
+<p><input type="radio" name="E02" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response7.png">
+<p><input type="radio" name="E02" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E2response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
-
-<input type ="hidden" id="E02_rt" name="E02_rt" value="">
 
 <!-- question 3 -->
 <div class="page" id="page3">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E3stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E03" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response1.png"> </td>
-      <td><input type="radio" name="E03" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E3response2.png"></td>
-			<td><input type="radio" name="E03" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response3.png"></td>
-			<td><input type="radio" name="E03" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E03" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response5.png"></td>
-			<td style="text-align: center"><input name="E03" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response6.png"></td>
-			<td style="text-align: center"><input name="E03" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response7.png"></td>
-			<td style="text-align: center"><input name="E03" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E03" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response1.png">
+<p><input type="radio" name="E03" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response2.png">
+<p><input type="radio" name="E03" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response3.png">
+<p><input type="radio" name="E03" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response4.png">
+<p><input type="radio" name="E03" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response5.png">
+<p><input type="radio" name="E03" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response6.png">
+<p><input type="radio" name="E03" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response7.png">
+<p><input type="radio" name="E03" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E3response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
-
-<input type ="hidden" id="E03_rt" name="E03_rt" value="">
 
 <!--question 4-->
 <div class="page" id="page4">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E4stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E04" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response1.png"> </td>
-      <td><input type="radio" name="E04" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E4response2.png"></td>
-			<td><input type="radio" name="E04" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response3.png"></td>
-			<td><input type="radio" name="E04" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E04" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response5.png"></td>
-			<td style="text-align: center"><input name="E04" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response6.png"></td>
-			<td style="text-align: center"><input name="E04" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response7.png"></td>
-			<td style="text-align: center"><input name="E04" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E04" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response1.png">
+<p><input type="radio" name="E04" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response2.png">
+<p><input type="radio" name="E04" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response3.png">
+<p><input type="radio" name="E04" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response4.png">
+<p><input type="radio" name="E04" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response5.png">
+<p><input type="radio" name="E04" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response6.png">
+<p><input type="radio" name="E04" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response7.png">
+<p><input type="radio" name="E04" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E4response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E04_rt" name="E04_rt" value="">
 
 <!--question 05-->
 <div class="page" id="page5">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E5stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E05" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response1.png"> </td>
-      <td><input type="radio" name="E05" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E5response2.png"></td>
-			<td><input type="radio" name="E05" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response3.png"></td>
-			<td><input type="radio" name="E05" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E05" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response5.png"></td>
-			<td style="text-align: center"><input name="E05" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response6.png"></td>
-			<td style="text-align: center"><input name="E05" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response7.png"></td>
-			<td style="text-align: center"><input name="E05" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E05" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response1.png">
+<p><input type="radio" name="E05" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response2.png">
+<p><input type="radio" name="E05" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response3.png">
+<p><input type="radio" name="E05" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response4.png">
+<p><input type="radio" name="E05" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response5.png">
+<p><input type="radio" name="E05" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response6.png">
+<p><input type="radio" name="E05" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response7.png">
+<p><input type="radio" name="E05" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E5response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
-
-<input type ="hidden" id="E05_rt" name="E05_rt" value="">
 
 <!--question 06-->
 <div class="page" id="page6">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E6stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E06" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response1.png"> </td>
-      <td><input type="radio" name="E06" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E6response2.png"></td>
-			<td><input type="radio" name="E06" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response3.png"></td>
-			<td><input type="radio" name="E06" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E06" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response5.png"></td>
-			<td style="text-align: center"><input name="E06" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response6.png"></td>
-			<td style="text-align: center"><input name="E06" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response7.png"></td>
-			<td style="text-align: center"><input name="E06" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E06" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response1.png">
+<p><input type="radio" name="E06" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response2.png">
+<p><input type="radio" name="E06" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response3.png">
+<p><input type="radio" name="E06" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response4.png">
+<p><input type="radio" name="E06" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response5.png">
+<p><input type="radio" name="E06" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response6.png">
+<p><input type="radio" name="E06" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response7.png">
+<p><input type="radio" name="E06" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E6response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E06_rt" name="E06_rt" value="">
 
 <!--question 07-->
 <div class="page" id="page7">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E7stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E07" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response1.png"> </td>
-      <td><input type="radio" name="E07" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E7response2.png"></td>
-			<td><input type="radio" name="E07" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response3.png"></td>
-			<td><input type="radio" name="E07" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E07" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response5.png"></td>
-			<td style="text-align: center"><input name="E07" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response6.png"></td>
-			<td style="text-align: center"><input name="E07" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response7.png"></td>
-			<td style="text-align: center"><input name="E07" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E07" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response1.png">
+<p><input type="radio" name="E07" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response2.png">
+<p><input type="radio" name="E07" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response3.png">
+<p><input type="radio" name="E07" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response4.png">
+<p><input type="radio" name="E07" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response5.png">
+<p><input type="radio" name="E07" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response6.png">
+<p><input type="radio" name="E07" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response7.png">
+<p><input type="radio" name="E07" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E7response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E07_rt" name="E07_rt" value="">
+
 
 <!--question 08-->
 <div class="page" id="page8">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E8stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E08" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response1.png"> </td>
-      <td><input type="radio" name="E08" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E8response2.png"></td>
-			<td><input type="radio" name="E08" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response3.png"></td>
-			<td><input type="radio" name="E08" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E08" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response5.png"></td>
-			<td style="text-align: center"><input name="E08" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response6.png"></td>
-			<td style="text-align: center"><input name="E08" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response7.png"></td>
-			<td style="text-align: center"><input name="E08" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E08" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response1.png">
+<p><input type="radio" name="E08" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response2.png">
+<p><input type="radio" name="E08" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response3.png">
+<p><input type="radio" name="E08" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response4.png">
+<p><input type="radio" name="E08" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response5.png">
+<p><input type="radio" name="E08" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response6.png">
+<p><input type="radio" name="E08" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response7.png">
+<p><input type="radio" name="E08" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E8response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E08_rt" name="E08_rt" value="">
 
 
 <!--question 09-->
 <div class="page" id="page9">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E9stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E09" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response1.png"> </td>
-      <td><input type="radio" name="E09" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E9response2.png"></td>
-			<td><input type="radio" name="E09" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response3.png"></td>
-			<td><input type="radio" name="E09" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E09" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response5.png"></td>
-			<td style="text-align: center"><input name="E09" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response6.png"></td>
-			<td style="text-align: center"><input name="E09" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response7.png"></td>
-			<td style="text-align: center"><input name="E09" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E09" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response1.png">
+<p><input type="radio" name="E09" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response2.png">
+<p><input type="radio" name="E09" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response3.png">
+<p><input type="radio" name="E09" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response4.png">
+<p><input type="radio" name="E09" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response5.png">
+<p><input type="radio" name="E09" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response6.png">
+<p><input type="radio" name="E09" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response7.png">
+<p><input type="radio" name="E09" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E9response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E09_rt" name="E09_rt" value="">
+
 
 <!--question 10-->
 <div class="page" id="page10">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E10stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E10" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response1.png"> </td>
-      <td><input type="radio" name="E10" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E10response2.png"></td>
-			<td><input type="radio" name="E10" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response3.png"></td>
-			<td><input type="radio" name="E10" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E10" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response5.png"></td>
-			<td style="text-align: center"><input name="E10" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response6.png"></td>
-			<td style="text-align: center"><input name="E10" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response7.png"></td>
-			<td style="text-align: center"><input name="E10" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E10" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response1.png">
+<p><input type="radio" name="E10" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response2.png">
+<p><input type="radio" name="E10" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response3.png">
+<p><input type="radio" name="E10" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response4.png">
+<p><input type="radio" name="E10" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response5.png">
+<p><input type="radio" name="E10" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response6.png">
+<p><input type="radio" name="E10" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response7.png">
+<p><input type="radio" name="E10" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E10response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E10_rt" name="E10_rt" value="">
 
 <!--question 11-->
 <div class="page" id="page11">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E11stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E11" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response1.png"> </td>
-      <td><input type="radio" name="E11" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E11response2.png"></td>
-			<td><input type="radio" name="E11" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response3.png"></td>
-			<td><input type="radio" name="E11" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E11" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response5.png"></td>
-			<td style="text-align: center"><input name="E11" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response6.png"></td>
-			<td style="text-align: center"><input name="E11" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response7.png"></td>
-			<td style="text-align: center"><input name="E11" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E11" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response1.png">
+<p><input type="radio" name="E11" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response2.png">
+<p><input type="radio" name="E11" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response3.png">
+<p><input type="radio" name="E11" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response4.png">
+<p><input type="radio" name="E11" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response5.png">
+<p><input type="radio" name="E11" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response6.png">
+<p><input type="radio" name="E11" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response7.png">
+<p><input type="radio" name="E11" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E11response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-<input type ="hidden" id="E11_rt" name="E11_rt" value="">
 
 <!--question 12-->
 <div class="page" id="page12">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E12stimulus.png" width="500" alt="" /></p>
-<table style="width:50%">
-	<tbody>
-		<tr>
-			<td><input type="radio" name="E12" value="1"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response1.png"> </td>
-      <td><input type="radio" name="E12" value="2" /></td>
-      <td><img src="https://casasanto.com/images/ravenSPMEset/E12response2.png"></td>
-			<td><input type="radio" name="E12" value="3"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response3.png"></td>
-			<td><input type="radio" name="E12" value="4"/></td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response4.png"></td>
-		</tr>
-		<tr>
-
-			<td style="text-align: center"><input name="E12" type="radio" value="5" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response5.png"></td>
-			<td style="text-align: center"><input name="E12" type="radio" value="6" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response6.png"></td>
-			<td style="text-align: center"><input name="E12" type="radio" value="7" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response7.png"></td>
-			<td style="text-align: center"><input name="E12" type="radio" value="8" />&nbsp;</td>
-			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response8.png"></td>
-		</tr>
-	</table>
+<p><input type="radio" name="E12" value="1" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response1.png">
+<p><input type="radio" name="E12" value="2" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response2.png">
+<p><input type="radio" name="E12" value="3" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response3.png">
+<p><input type="radio" name="E12" value="4" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response4.png">
+<p><input type="radio" name="E12" value="5" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response5.png">
+<p><input type="radio" name="E12" value="6" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response6.png">
+<p><input type="radio" name="E12" value="7" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response7.png">
+<p><input type="radio" name="E12" value="8" /></p>
+<img src="https://casasanto.com/images/ravenSPMEset/E12response8.png">
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
-<input type ="hidden" id="E12_rt" name="E12_rt" value="">
 
-<div class="page" id="page13">
-<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b> What do you think the experiment is about? </b></p>
+<!-- END OF TRIAL, START DEMOGRAPHICS -->
+<div class="page" id="demo">
+<p> testing demo page </p>
+<input id="submitButton" type="submit">
+</div>
+
+
+
+
+
+<!-- page 26 -->
+
+<div class="page" id="version1page26">
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: +1em; margin-left:-200px; font-weight:normal;"><em>Next, please answer the following 11 questions about yourself. All information will be kept anonymous and confidential.</em></p>
+
+<p>&nbsp;</p>
+<span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please select&nbsp;your sex:</b></p>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input id="Male" name="Sex" type="radio" value="male" />&nbsp;Male</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input id="Female" name="Sex" type="radio" value="female" />&nbsp;Female</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextButtonSex()">Continue</a></div>
+
+<!-- page 27 -->
+
+<div class="page" id="version1page27"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Is English your first language?</b></p>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Language" type="radio" value="justEnglish" />&nbsp;Yes, just English</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Language" type="radio" value="Englishandanother" />&nbsp;Yes, along with another language(s)</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Language" type="radio" value="no" />&nbsp;No</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextButtonLanguage()">Continue</a></div>
+<!-- page 28 -->
+
+<div class="page" id="version1page28"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please enter your height.</b></p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px; font-weight:normal;">I am &nbsp;<input class="form-control" id="version1HeightFt" name="HeightFt" size="120" style="display: table-cell; width: 50px;" type="text" /> &nbsp;feet and &nbsp;<input class="form-control" id="version1HeightIn" name="HeightIn" size="120" style="display: table-cell; width: 50px;" type="text" /> &nbsp;inches tall.</p>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextButtonHeight()">Continue</a></div>
+<!-- page 29 -->
+
+<div class="page" id="version1page29"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please enter your age in years:</b></p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" id = "Age" name="Age" size="120" style="display: table-cell; width: 100px;" type="text" />&nbsp;</p>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextButtonAge()">Continue</a></div>
+<!-- page 30 -->
+
+<div class="page" id="version1page30"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>How conservative or liberal are you?</b></p>
+
+<p>&nbsp;</p>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="poltiical orientation" type="radio" value="Very_liberal" />&nbsp;Very liberal</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="poltiical orientation" type="radio" value="Somewhat_liberal" />&nbsp;Somewhat liberal</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="poltiical orientation" type="radio" value="Moderate" />&nbsp;Moderate</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="poltiical orientation" type="radio" value="Somewhat_conservative" />&nbsp;Somewhat conservative</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="poltiical orientation" type="radio" value="Very_conservative" />&nbsp;Very conservative</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextDemogTrial()">Continue</a></div>
+<!-- page 31 -->
+
+<div class="page" id="version1page31"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please enter your country of birth:</b></p>
 
 <p>&nbsp;</p>
 
 <p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" name="Country" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
-</div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextTextTrial()">Continue</a></div>
+<!-- page 32 -->
+
+<div class="page" id="version1page32"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please select your race. Check all that apply:</b></p>
+
+<p>&nbsp;</p>
+
+<div class="checkbox" name="race"><label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="white" />White</label><br />
+<label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="black" />Black or African American</label><br />
+<label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="hispanic" />Hispanic or Latino</label><br />
+<label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="nativeAmerican" />Native American or Alaska Native</label><br />
+<label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="asian" />Asian</label><br />
+<label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="pacificIslander" />Pacific Islander</label><br />
+<label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="other" />Other</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextCheckboxTrial()">Continue</a></div>
+<!-- page 33 -->
+
+<div class="page" id="version1page33"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please enter your occupation:</b></p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" name="Occupation" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextTextTrial()">Continue</a></div>
+<!-- page 34 -->
+
+<div class="page" id="version1page34"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please select your annual <em>personal</em> income:</b></p>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="under15" />&nbsp;Under $15,000</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="15000_to_29999" />&nbsp;$15,000 to $29,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="30000_to_44999" />&nbsp;$30,000 to $44,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="45000_to_59999" />&nbsp;$45,000 to $59,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="60000_to_74999" />&nbsp;$60,000 to $74,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="75000_to_89999" />&nbsp;$75,000 to $89,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="90000_to_104999" />&nbsp;$90,000 to $104,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="105000_to_119999" />&nbsp;$105,000 to $119,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="120000_to_134999" />&nbsp;$120,000 to $134,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="135000_to_149999" />&nbsp;$135,000 to $149,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="150000_to_164999" />&nbsp;$150,000 to $164,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="165000_to_179999" />&nbsp;$165,000 to $179,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="180000_to_194999" />&nbsp;$180,000 to $194,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="195000_to_209999" />&nbsp;$195,000 to $209,999</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="210000plus" />&nbsp;$210,000 and over</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextDemogTrial()">Continue</a></div>
+<!-- page 35 -->
+
+<div class="page" id="version1page35"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Please select the highest level of education you've <em>completed</em>:</b></p>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="noHighSchool" />&nbsp;No high school degree</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="highSchool" />&nbsp;High school degree</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="associates" />&nbsp;Associate's degree</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="bachelors" />&nbsp;Bachelor's degree</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="masters_professional" />&nbsp;Master's or professional degree</label></div>
+
+<div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="PhD" />&nbsp;Doctorate or equivalent</label></div>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextDemogTrial()">Continue</a></div>
+<!-- page 36 -->
+
+<div class="page" id="version1page36"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;">Please indicate your preferences in the use of hands in the following activities or objects:</p>
+
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>Always Left</th>
+			<th>Usually Left</th>
+			<th>Both Equally</th>
+			<th>Usually Right</th>
+			<th>Always Right</th>
+		</tr>
+		<tr>
+			<td>Writing</td>
+			<td>&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="100" />&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Throwing</td>
+			<td>&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="100" />&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Toothbrush</td>
+			<td>&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="100" />&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Spoon</td>
+			<td>&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="100" />&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:EHITrial()">Continue</a></div>
+
+
+<!-- Submit button -->
+
+<div class="page" id="version1submit"><br />
+<br />
+<br />
+&nbsp;
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 13.6999998092651px; line-height: 20.7999992370605px;">You're all done! Thanks for completing this HIT!</p>
+<input class="submitButton" id="version1submitButton" name="version1submitButton" type="submit" /></div>
+</fieldset>
+</section>
+
 
 
 <!--
-<div class="page" id="page13">
+<div class="page" id="page5">
 <p>How did you like this HIT?</p>
 <p><input type="text" name="howLike" value="" /></p>
 <p>&nbsp;</p>
 </div>
 
-
-<input type="submit" id="submitButton" name="submitButton">
--->
+<input type="submit" id="submitButton">
