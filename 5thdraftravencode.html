@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://timbrady.org/turk/TimTurkTools.js"></script>
 <script>
-var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
+var order = new Array(1,2,3,4,5,6,7,8,9,10,11);
 var currentTrial = 0; // changed from 1 to 0!
 var time_limite = 60;
 
@@ -172,10 +172,36 @@ function NextButtonAge() {
 
 }
 
+function NextButtonLiberal() {
+	var consent_radio = $("input[type=radio]:checked", ("#version1page30")).val();
+
+	if (consent_radio) {
+		$("#version1page30").hide();
+		$('#version1page31').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page30").show();
+	}
+}
+
+function NextButtonBirth() {
+	var country = $("#Country");
+	//var inp = $("input[type=text]", ("#version1page28"));
+
+	if (country.val().length > 0) {
+		$("#version1page31").hide();
+		$('#version1page32').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page31").show();
+	}
+}
+
+
 
 //Moves you through the check box trials
 // here is the code for checkboxes
-function NextCheckboxTrial() {
+/*function NextCheckboxTrial() {
 	if ($('input:checkbox:checked').length == 0) {
 		alert('Please answer the question before moving on!');
 	} else {
@@ -184,7 +210,76 @@ function NextCheckboxTrial() {
 		ShowTrial(currentTrial);
 	}
 }
+*/
 
+function NextButtonRace() {
+	if ($('input:checkbox:checked').length == 0) {
+		alert('Please answer the question before moving on!');
+	} else {
+		if ($('input:checkbox:checked').length > 0){
+			$("#version1page32").hide();
+		  $('#version1page33').show();	
+		} else {
+			alert("Please answer the question before moving on!");
+		  $("#version1page32").show();
+		}
+		
+	}
+}
+
+function NextButtonOccupation() {
+	var occupation = $("#Occupation");
+	//var inp = $("input[type=text]", ("#version1page28"));
+
+	if (occupation.val().length > 0) {
+		$("#version1page33").hide();
+		$('#version1page34').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page33").show();
+	}
+
+
+}
+
+function NextButtonIncome() {
+	var consent_radio = $("input[type=radio]:checked", ("#version1page34")).val();
+
+	if (consent_radio) {
+		$("#version1page34").hide();
+		$('#version1page35').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page34").show();
+	}
+}
+
+function NextButtonEducation() {
+	var consent_radio = $("input[type=radio]:checked", ("#version1page35")).val();
+	if (consent_radio) {
+		$("#version1page35").hide();
+		$('#version1page36').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page35").show();
+	}
+}
+
+function NextButtonHands() {
+	var EHI_Writing = $("#EHI_Writing");
+	var EHI_Throwing = $("#EHI_Throwing");
+	var EHI_Toothbrush = $('#EHI_Toothbrush');
+	var EHI_Spoon = $ ('#EHI_Spoon');
+	//var inp = $("input[type=text]", ("#version1page28"));
+
+	if (EHI_Writing && EHI_Throwing && EHI_Toothbrush && EHI_Spoon) {
+		$("#version1page36").hide();
+		$('#version1page37').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page36").show();
+	}
+}
 
 </script>
 
@@ -752,7 +847,7 @@ Expires 10/1/2018</p>
 <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="poltiical orientation" type="radio" value="Very_conservative" />&nbsp;Very conservative</label></div>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:NextDemogTrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonLiberal()">Continue</a></div>
 <!-- page 31 -->
 
 <div class="page" id="version1page31"><span class="currentTrialIndicator">&nbsp;</span>
@@ -765,10 +860,10 @@ Expires 10/1/2018</p>
 
 <p>&nbsp;</p>
 
-<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" name="Country" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" id = "Country" name="Country" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:NextTextTrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonBirth()">Continue</a></div>
 <!-- page 32 -->
 
 <div class="page" id="version1page32"><span class="currentTrialIndicator">&nbsp;</span>
@@ -790,7 +885,7 @@ Expires 10/1/2018</p>
 <label style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input name="race" type="checkbox" value="other" />Other</label></div>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:NextCheckboxTrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonRace()">Continue</a></div>
 <!-- page 33 -->
 
 <div class="page" id="version1page33"><span class="currentTrialIndicator">&nbsp;</span>
@@ -803,10 +898,10 @@ Expires 10/1/2018</p>
 
 <p>&nbsp;</p>
 
-<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" name="Occupation" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" id = "Occupation" name="Occupation" size="120" style="display: table-cell; width: 400px;" type="text" />&nbsp;</p>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:NextTextTrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonOccupation()">Continue</a></div>
 <!-- page 34 -->
 
 <div class="page" id="version1page34"><span class="currentTrialIndicator">&nbsp;</span>
@@ -848,7 +943,7 @@ Expires 10/1/2018</p>
 <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Income" type="radio" value="210000plus" />&nbsp;$210,000 and over</label></div>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:NextDemogTrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonIncome()">Continue</a></div>
 <!-- page 35 -->
 
 <div class="page" id="version1page35"><span class="currentTrialIndicator">&nbsp;</span>
@@ -872,7 +967,7 @@ Expires 10/1/2018</p>
 <div class="radio" style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><label><input name="Education" type="radio" value="PhD" />&nbsp;Doctorate or equivalent</label></div>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:NextDemogTrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonEducation()">Continue</a></div>
 <!-- page 36 -->
 
 <div class="page" id="version1page36"><span class="currentTrialIndicator">&nbsp;</span>
@@ -897,44 +992,44 @@ Expires 10/1/2018</p>
 		<tr>
 			<td>Writing</td>
 			<td>&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="-100" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="-50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="0" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Writing" type="radio" value="100" />&nbsp;</td>
+			<td style="text-align: center"><input id = 'EHI_Writing' = name="EHI_Writing" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input id = 'EHI_Writing' name="EHI_Writing" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input id = 'EHI_Writing' name="EHI_Writing" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input id = 'EHI_Writing' name="EHI_Writing" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input id = 'EHI_Writing' name="EHI_Writing" type="radio" value="100" />&nbsp;</td>
 		</tr>
 		<tr>
 			<td>Throwing</td>
 			<td>&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-100" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="-50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="0" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Throwing" type="radio" value="100" />&nbsp;</td>
+			<td style="text-align: center"><input id = name="EHI_Throwing" name="EHI_Throwing" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input id = name="EHI_Throwing" name="EHI_Throwing" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input id = name="EHI_Throwing" name="EHI_Throwing" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input id = name="EHI_Throwing" name="EHI_Throwing" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input id = name="EHI_Throwing" name="EHI_Throwing" type="radio" value="100" />&nbsp;</td>
 		</tr>
 		<tr>
 			<td>Toothbrush</td>
 			<td>&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="-100" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="-50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="0" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Toothbrush" type="radio" value="100" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Toothbrush" name="EHI_Toothbrush" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Toothbrush" name="EHI_Toothbrush" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Toothbrush" name="EHI_Toothbrush" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Toothbrush" name="EHI_Toothbrush" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Toothbrush" name="EHI_Toothbrush" type="radio" value="100" />&nbsp;</td>
 		</tr>
 		<tr>
 			<td>Spoon</td>
 			<td>&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="-100" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="-50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="0" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="50" />&nbsp;</td>
-			<td style="text-align: center"><input name="EHI_Spoon" type="radio" value="100" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Spoon"  name="EHI_Spoon" type="radio" value="-100" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Spoon"  name="EHI_Spoon" type="radio" value="-50" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Spoon"  name="EHI_Spoon" type="radio" value="0" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Spoon"  name="EHI_Spoon" type="radio" value="50" />&nbsp;</td>
+			<td style="text-align: center"><input id="EHI_Spoon"  name="EHI_Spoon" type="radio" value="100" />&nbsp;</td>
 		</tr>
 	</tbody>
 </table>
 
 <p>&nbsp;</p>
-<a class="nextLink" href="javascript:EHITrial()">Continue</a></div>
+<a class="nextLink" href="javascript:NextButtonHands()">Continue</a></div>
 
 
 <!-- Submit button -->
