@@ -16,6 +16,13 @@ var timer = setInterval(function(){
 			NextTrial();
 		}
 	},1000);
+var timesRun = 0;
+var interval = setInterval(function(){
+    timesRun += 1;
+    if(timesRun == 12){
+        clearInterval(interval);
+    }
+}, 2000);
 
 $(document).ready(function(){
 	ShowTrial(consent);
@@ -23,19 +30,33 @@ $(document).ready(function(){
 	CheckBlockList('Tim_ColorMemory', BlockIfDoneBefore);
 	$("#submitButton").hide();
 });
+
+// this disables the enter button. I added this because mTurk
+// has a bug where if the ppt presses "enter" or "return" the HIT is submitted
+/*$('html').bind('keypress', function(e) {
+   if(e.keyCode == 13) {
+      return false;
+   }
+});*/
 /*
 function BlockIfDoneBefore(){
 	$('body').html(
 		"<p>Sorry, you have already done a HIT like this one and aren't eligible for this HIT. Please return it. Thanks!</p>"
 		)
 }
-function BlockIfPreview() {
-	if (IsTurkPreview()) {
-		$('body').append("<div id='previewMode'><p> PREVIEWING THE HIT</p><p> PREVIEWING THE HIT</p><p> PREVIEWING THE HIT</p>");
 
-	}
+// Stops people from viewing the whole HIT before consenting.
+function BlockIfPreview() {
+    if (IsTurkPreview()) {
+        $('body').append(
+                "<div id='previewMode'>" +
+                    "<p>PREVIEWING THE HIT</p>" +
+                    "<p>PREVIEWING THE HIT</p>" +
+                    "<p>PREVIEWING THE HIT</p></div>");
+    }
 }
 */
+
 
 function ShowConsent() {
 	var consent_radio = $("input[type=radio]:checked", ("#consent")).val();
@@ -76,22 +97,10 @@ function ShowTrial(which) {
     if(timesRun == 12){
         clearInterval(interval);
     }
-    //do whatever here..
-}, 2000);
+  }, 2000);
 }*/
-/*
-function ShowTrial(which) {
-	if (which >= order.length) {
-		$("#submitButton").show();
-	} else {
-		time_limite = 60;
-		var sec = document.getElementById("second");
-		sec.innerHTML = time_limite;
-		$("#page" + order[which]).show();
-		var showTrial = which+1; // 0 indexed to 1 indexed
-		$(".currentTrialIndicator").text("Current trial: " + showTrial + " of " + order.length);
-	}
-}*/
+
+
 
 
 // records reaction times. Put this function in the successful if else function
@@ -99,10 +108,14 @@ function ShowTrial(which) {
 // 2. turn javascript RT variable into HTML variable (example. HTML_RT)
 // 3. use "document.write..." function to write/record the HTML RT variable
 // currentTime - 60seconds = RT
-document.write('<input type="hidden" name="reactionTime" value="HTML_RT">');
 
 
 function NextTrial() {
+	var currentTime = new Date().getTime();//here define Response Time
+	/*var RT = currentTime - startTrialTime;
+	$('#problem'+currentTrial +'RT').val(RT);
+	$('#problem'+currentTrial +'RT').hide();*/
+	
 	var checkedValue = $("input[type=radio]:checked",
 		"#page" + order[currentTrial]).val();
 	if(time_limite>0){
@@ -126,6 +139,22 @@ function NextTrial() {
 			}
 	}
 }
+
+/*
+function StartTrial() {
+	if (trialRunning) {
+		return;
+	}
+
+	if (IsTurkPreview()) {
+		alert("Please accept the HIT before starting!");
+		return;
+	}
+
+	trialRunning = true;
+	startTrialTime = new Date().getTime();
+}
+*/
 
 // demographic buttons
 
@@ -286,7 +315,13 @@ function NextButtonHands() {
 	var EHI_Spoon = $ ('#EHI_Spoon');
 	//var inp = $("input[type=text]", ("#version1page28"));
 
-	if (EHI_Writing && EHI_Throwing && EHI_Toothbrush && EHI_Spoon) {
+	if (EHI_Writing){
+		if (EHI_Throwing){
+	    if (EHI_Toothbrush){
+				if (EHI_Spoon){
+				}
+			}
+		}
 		$("#version1page36").hide();
 		$('#version1page37').show();	
  	} else {
@@ -295,6 +330,20 @@ function NextButtonHands() {
 	}
 }
 
+function NextButtonDebrief() {
+	var debrief = $("#Debrief");
+	//var inp = $("input[type=text]", ("#version1page28"));
+
+	if (debrief.val().length > 0) {
+		$("#version1page37").hide();
+		$('#version1submit').show();	
+ 	} else {
+	 	alert("Please answer the question before moving on!");
+		$("#version1page37").show();
+	}
+
+
+}
 </script>
 
 
@@ -1146,6 +1195,21 @@ Expires 10/1/2018</p>
 <a class="nextLink" href="javascript:NextButtonHands()">Continue</a></div>
 
 
+<!--page 37-->
+<div class="page" id="version1page37"><span class="currentTrialIndicator">&nbsp;</span>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><b>Now you finish the experiment! What do you think the experiment is about ? </b></p>
+
+<p>&nbsp;</p>
+
+<p style="font-family: Verdana, Geneva, sans-serif; font-size: 11.6999998092651px; line-height: 20.7999992370605px;"><input class="form-control" id = "Debrief" name="Debrief" size="120" style="display: table-cell; width: 500px;" type="text" />&nbsp;</p>
+
+<p>&nbsp;</p>
+<a class="nextLink" href="javascript:NextButtonDebrief()">Continue</a></div>
 <!-- Submit button -->
 
 <div class="page" id="version1submit"><br />
