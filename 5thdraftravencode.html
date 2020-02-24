@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://timbrady.org/turk/TimTurkTools.js"></script>
 <script>
-var order = new Array(1,2,3,4,5,6,7,8,9,10,11);
+var order = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
 var currentTrial = 0; // changed from 1 to 0!
 var time_limite = 60;
 
@@ -58,13 +58,27 @@ function StartExperiment() {
 //goes through trial screens
 function ShowTrial(which) {
 	if (which < order.length) {
+		time_limite = 60;
+		var sec = document.getElementById("second");
+		sec.innerHTML = time_limite;
 		$("#page" + order[which]).show();
     } else if (which >= order.length) {
     	$("#page" + order[which]).hide();
       	$("#version1page26").show();
+				clearTimeout(time_limite);
     }
 }
 
+/*function stoptimer(){
+	var timesRun = 0;
+  var interval = setInterval(function(){
+    timesRun += 1;
+    if(timesRun == 12){
+        clearInterval(interval);
+    }
+    //do whatever here..
+}, 2000);
+}*/
 /*
 function ShowTrial(which) {
 	if (which >= order.length) {
@@ -77,8 +91,8 @@ function ShowTrial(which) {
 		var showTrial = which+1; // 0 indexed to 1 indexed
 		$(".currentTrialIndicator").text("Current trial: " + showTrial + " of " + order.length);
 	}
-}
-*/
+}*/
+
 
 // records reaction times. Put this function in the successful if else function
 // 1. make javascript RT = currentTrialTime - 60seconds
@@ -461,287 +475,387 @@ Expires 10/1/2018</p>
 <div class="page" id="page2">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E2stimulus.png" width="500" alt="" /></p>
 
-<p><input type="radio" name="E02" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response1.png">
-<p><input type="radio" name="E02" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response2.png">
-<p><input type="radio" name="E02" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response3.png">
-<p><input type="radio" name="E02" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response4.png">
-<p><input type="radio" name="E02" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response5.png">
-<p><input type="radio" name="E02" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response6.png">
-<p><input type="radio" name="E02" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response7.png">
-<p><input type="radio" name="E02" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E2response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E02" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response1.png"> </td>
+      <td><input type="radio" name="E02" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E2response2.png"></td>
+			<td><input type="radio" name="E02" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response3.png"></td>
+			<td><input type="radio" name="E02" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E02" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response5.png"></td>
+			<td style="text-align: center"><input name="E02" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response6.png"></td>
+			<td style="text-align: center"><input name="E02" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response7.png"></td>
+			<td style="text-align: center"><input name="E02" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E2response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+
+<input type ="hidden" id="E02_rt" name="E02_rt" value="">
 
 <!-- question 3 -->
 <div class="page" id="page3">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E3stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E03" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response1.png">
-<p><input type="radio" name="E03" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response2.png">
-<p><input type="radio" name="E03" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response3.png">
-<p><input type="radio" name="E03" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response4.png">
-<p><input type="radio" name="E03" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response5.png">
-<p><input type="radio" name="E03" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response6.png">
-<p><input type="radio" name="E03" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response7.png">
-<p><input type="radio" name="E03" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E3response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E03" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response1.png"> </td>
+      <td><input type="radio" name="E03" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E3response2.png"></td>
+			<td><input type="radio" name="E03" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response3.png"></td>
+			<td><input type="radio" name="E03" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E03" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response5.png"></td>
+			<td style="text-align: center"><input name="E03" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response6.png"></td>
+			<td style="text-align: center"><input name="E03" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response7.png"></td>
+			<td style="text-align: center"><input name="E03" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E3response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+
+<input type ="hidden" id="E03_rt" name="E03_rt" value="">
 
 <!--question 4-->
 <div class="page" id="page4">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E4stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E04" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response1.png">
-<p><input type="radio" name="E04" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response2.png">
-<p><input type="radio" name="E04" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response3.png">
-<p><input type="radio" name="E04" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response4.png">
-<p><input type="radio" name="E04" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response5.png">
-<p><input type="radio" name="E04" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response6.png">
-<p><input type="radio" name="E04" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response7.png">
-<p><input type="radio" name="E04" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E4response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E04" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response1.png"> </td>
+      <td><input type="radio" name="E04" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E4response2.png"></td>
+			<td><input type="radio" name="E04" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response3.png"></td>
+			<td><input type="radio" name="E04" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E04" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response5.png"></td>
+			<td style="text-align: center"><input name="E04" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response6.png"></td>
+			<td style="text-align: center"><input name="E04" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response7.png"></td>
+			<td style="text-align: center"><input name="E04" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E4response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E04_rt" name="E04_rt" value="">
 
 <!--question 05-->
 <div class="page" id="page5">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E5stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E05" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response1.png">
-<p><input type="radio" name="E05" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response2.png">
-<p><input type="radio" name="E05" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response3.png">
-<p><input type="radio" name="E05" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response4.png">
-<p><input type="radio" name="E05" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response5.png">
-<p><input type="radio" name="E05" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response6.png">
-<p><input type="radio" name="E05" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response7.png">
-<p><input type="radio" name="E05" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E5response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E05" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response1.png"> </td>
+      <td><input type="radio" name="E05" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E5response2.png"></td>
+			<td><input type="radio" name="E05" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response3.png"></td>
+			<td><input type="radio" name="E05" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E05" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response5.png"></td>
+			<td style="text-align: center"><input name="E05" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response6.png"></td>
+			<td style="text-align: center"><input name="E05" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response7.png"></td>
+			<td style="text-align: center"><input name="E05" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E5response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+
+<input type ="hidden" id="E05_rt" name="E05_rt" value="">
 
 <!--question 06-->
 <div class="page" id="page6">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E6stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E06" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response1.png">
-<p><input type="radio" name="E06" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response2.png">
-<p><input type="radio" name="E06" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response3.png">
-<p><input type="radio" name="E06" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response4.png">
-<p><input type="radio" name="E06" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response5.png">
-<p><input type="radio" name="E06" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response6.png">
-<p><input type="radio" name="E06" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response7.png">
-<p><input type="radio" name="E06" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E6response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E06" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response1.png"> </td>
+      <td><input type="radio" name="E06" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E6response2.png"></td>
+			<td><input type="radio" name="E06" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response3.png"></td>
+			<td><input type="radio" name="E06" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E06" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response5.png"></td>
+			<td style="text-align: center"><input name="E06" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response6.png"></td>
+			<td style="text-align: center"><input name="E06" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response7.png"></td>
+			<td style="text-align: center"><input name="E06" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E6response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E06_rt" name="E06_rt" value="">
 
 <!--question 07-->
 <div class="page" id="page7">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E7stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E07" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response1.png">
-<p><input type="radio" name="E07" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response2.png">
-<p><input type="radio" name="E07" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response3.png">
-<p><input type="radio" name="E07" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response4.png">
-<p><input type="radio" name="E07" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response5.png">
-<p><input type="radio" name="E07" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response6.png">
-<p><input type="radio" name="E07" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response7.png">
-<p><input type="radio" name="E07" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E7response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E07" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response1.png"> </td>
+      <td><input type="radio" name="E07" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E7response2.png"></td>
+			<td><input type="radio" name="E07" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response3.png"></td>
+			<td><input type="radio" name="E07" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E07" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response5.png"></td>
+			<td style="text-align: center"><input name="E07" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response6.png"></td>
+			<td style="text-align: center"><input name="E07" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response7.png"></td>
+			<td style="text-align: center"><input name="E07" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E7response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-
+<input type ="hidden" id="E07_rt" name="E07_rt" value="">
 
 <!--question 08-->
 <div class="page" id="page8">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E8stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E08" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response1.png">
-<p><input type="radio" name="E08" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response2.png">
-<p><input type="radio" name="E08" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response3.png">
-<p><input type="radio" name="E08" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response4.png">
-<p><input type="radio" name="E08" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response5.png">
-<p><input type="radio" name="E08" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response6.png">
-<p><input type="radio" name="E08" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response7.png">
-<p><input type="radio" name="E08" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E8response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E08" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response1.png"> </td>
+      <td><input type="radio" name="E08" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E8response2.png"></td>
+			<td><input type="radio" name="E08" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response3.png"></td>
+			<td><input type="radio" name="E08" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E08" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response5.png"></td>
+			<td style="text-align: center"><input name="E08" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response6.png"></td>
+			<td style="text-align: center"><input name="E08" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response7.png"></td>
+			<td style="text-align: center"><input name="E08" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E8response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E08_rt" name="E08_rt" value="">
 
 
 <!--question 09-->
 <div class="page" id="page9">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E9stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E09" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response1.png">
-<p><input type="radio" name="E09" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response2.png">
-<p><input type="radio" name="E09" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response3.png">
-<p><input type="radio" name="E09" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response4.png">
-<p><input type="radio" name="E09" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response5.png">
-<p><input type="radio" name="E09" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response6.png">
-<p><input type="radio" name="E09" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response7.png">
-<p><input type="radio" name="E09" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E9response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E09" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response1.png"> </td>
+      <td><input type="radio" name="E09" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E9response2.png"></td>
+			<td><input type="radio" name="E09" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response3.png"></td>
+			<td><input type="radio" name="E09" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E09" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response5.png"></td>
+			<td style="text-align: center"><input name="E09" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response6.png"></td>
+			<td style="text-align: center"><input name="E09" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response7.png"></td>
+			<td style="text-align: center"><input name="E09" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E9response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
-
+<input type ="hidden" id="E09_rt" name="E09_rt" value="">
 
 <!--question 10-->
 <div class="page" id="page10">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E10stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E10" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response1.png">
-<p><input type="radio" name="E10" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response2.png">
-<p><input type="radio" name="E10" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response3.png">
-<p><input type="radio" name="E10" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response4.png">
-<p><input type="radio" name="E10" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response5.png">
-<p><input type="radio" name="E10" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response6.png">
-<p><input type="radio" name="E10" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response7.png">
-<p><input type="radio" name="E10" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E10response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E10" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response1.png"> </td>
+      <td><input type="radio" name="E10" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E10response2.png"></td>
+			<td><input type="radio" name="E10" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response3.png"></td>
+			<td><input type="radio" name="E10" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E10" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response5.png"></td>
+			<td style="text-align: center"><input name="E10" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response6.png"></td>
+			<td style="text-align: center"><input name="E10" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response7.png"></td>
+			<td style="text-align: center"><input name="E10" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E10response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E10_rt" name="E10_rt" value="">
 
 <!--question 11-->
 <div class="page" id="page11">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E11stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E11" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response1.png">
-<p><input type="radio" name="E11" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response2.png">
-<p><input type="radio" name="E11" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response3.png">
-<p><input type="radio" name="E11" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response4.png">
-<p><input type="radio" name="E11" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response5.png">
-<p><input type="radio" name="E11" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response6.png">
-<p><input type="radio" name="E11" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response7.png">
-<p><input type="radio" name="E11" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E11response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E11" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response1.png"> </td>
+      <td><input type="radio" name="E11" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E11response2.png"></td>
+			<td><input type="radio" name="E11" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response3.png"></td>
+			<td><input type="radio" name="E11" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E11" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response5.png"></td>
+			<td style="text-align: center"><input name="E11" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response6.png"></td>
+			<td style="text-align: center"><input name="E11" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response7.png"></td>
+			<td style="text-align: center"><input name="E11" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E11response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
 
+<input type ="hidden" id="E11_rt" name="E11_rt" value="">
 
 <!--question 12-->
 <div class="page" id="page12">
 <p><img src="https://casasanto.com/images/ravenSPMEset/E12stimulus.png" width="500" alt="" /></p>
-<p><input type="radio" name="E12" value="1" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response1.png">
-<p><input type="radio" name="E12" value="2" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response2.png">
-<p><input type="radio" name="E12" value="3" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response3.png">
-<p><input type="radio" name="E12" value="4" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response4.png">
-<p><input type="radio" name="E12" value="5" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response5.png">
-<p><input type="radio" name="E12" value="6" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response6.png">
-<p><input type="radio" name="E12" value="7" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response7.png">
-<p><input type="radio" name="E12" value="8" /></p>
-<img src="https://casasanto.com/images/ravenSPMEset/E12response8.png">
+<table style="width:50%">
+	<tbody>
+		<tr>
+			<td><input type="radio" name="E12" value="1"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response1.png"> </td>
+      <td><input type="radio" name="E12" value="2" /></td>
+      <td><img src="https://casasanto.com/images/ravenSPMEset/E12response2.png"></td>
+			<td><input type="radio" name="E12" value="3"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response3.png"></td>
+			<td><input type="radio" name="E12" value="4"/></td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response4.png"></td>
+		</tr>
+		<tr>
+
+			<td style="text-align: center"><input name="E12" type="radio" value="5" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response5.png"></td>
+			<td style="text-align: center"><input name="E12" type="radio" value="6" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response6.png"></td>
+			<td style="text-align: center"><input name="E12" type="radio" value="7" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response7.png"></td>
+			<td style="text-align: center"><input name="E12" type="radio" value="8" />&nbsp;</td>
+			<td><img src="https://casasanto.com/images/ravenSPMEset/E12response8.png"></td>
+		</tr>
+	</table>
 </label>
 <p>&nbsp;</p>
 
 <a class="nextLink" href="javascript:NextTrial()">Next trial</a> <span class="currentTrialIndicator">&nbsp;</span>
 </div>
+<input type ="hidden" id="E12_rt" name="E12_rt" value="">
 
 <!-- END OF TRIAL, START DEMOGRAPHICS -->
 <div class="page" id="demo">
